@@ -118,22 +118,12 @@ define([
                 buttons = this._getAddToWishlistButton(event);
 
             buttons.each(function (index, element) {
-                var params = $(element).data('post'),
-                    currentTarget = event.currentTarget,
-                    targetElement,
-                    targetValue;
+                var params = $(element).data('post');
 
                 if (!params) {
                     params = {
                         'data': {}
                     };
-                } else if ($(currentTarget).data('selector') || $(currentTarget).attr('name')) {
-                    targetElement = self._getElementData(currentTarget);
-                    targetValue = Object.keys(targetElement)[0];
-
-                    if (params.data.hasOwnProperty(targetValue) && !dataToAdd.hasOwnProperty(targetValue)) {
-                        delete params.data[targetValue];
-                    }
                 }
 
                 params.data = $.extend({}, params.data, dataToAdd, {
@@ -154,7 +144,7 @@ define([
                 return productListWrapper.find(this.options.actionElement);
             }
 
-            return $(this.options.actionElement);
+            return $(this.options.productPageWrapper).find(this.options.actionElement);
         },
 
         /**
@@ -254,7 +244,7 @@ define([
                     action += 'uenc/' + params.data.uenc;
                 }
 
-                $(form).attr('action', action).trigger('submit');
+                $(form).attr('action', action).submit();
             });
         },
 
